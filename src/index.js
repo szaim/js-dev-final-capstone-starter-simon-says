@@ -150,12 +150,16 @@ function setLevel(level = 1) {
   if (level > 4 || level < 0) {
     return "Please enter level 1, 2, 3, or 4";
   } else if (!level || level === 1) {
+    maxRoundCount = 8;
     return 8;
   } else if (level === 2) {
+    maxRoundCount = 14;
     return 14;
   } else if (level === 3) {
+    maxRoundCount = 20;
     return 20;
   } else if (level === 4) {
+    maxRoundCount = 31;
     return 31;
   } 
   console.log("setLevel function", level);
@@ -233,10 +237,10 @@ function activatePads(sequence) {
  *
  * 2. (Done) The status should display a message that says "The computer's turn..."
  *
- * 3. The heading should display a message that lets the player know how many rounds are left
+ * 3. (Done) The heading should display a message that lets the player know how many rounds are left
  * (e.g., "`Round ${roundCount} of ${maxRoundCount}`")
  *
- * 4. Push a randomly selected color into the `computerSequence` array
+ * 4. (Done) Push a randomly selected color into the `computerSequence` array
  *
  * 5. Call `activatePads(computerSequence)` to light up each pad according to order defined in
  * `computerSequence`
@@ -251,7 +255,12 @@ function activatePads(sequence) {
  function playComputerTurn() {
   // TODO: Write your code here.
   padContainer.classList.add("unclickable");
-  statusSpan.innerText = "The computer's turn";
+  statusSpan.innerText = "The computer's turn...";
+  heading.innerText = `Round ${roundCount} of ${maxRoundCount}`
+  const totalColors = Object.keys(pads).length;
+  let randomColor = pads[Math.floor((Math.random())*totalColors)].color;
+  computerSequence.push(randomColor);
+  console.log(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
