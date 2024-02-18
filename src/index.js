@@ -4,10 +4,14 @@
 
  const startButton = document.querySelector(".js-start-button");
  // TODO: Add the missing query selectors:
- const statusSpan; // Use querySelector() to get the status element
- const heading; // Use querySelector() to get the heading element
- const padContainer; // Use querySelector() to get the heading element
+ const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
+ const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
+ const padContainer = document.querySelector(".js-pad-container"); // Use querySelector() to get the heading element
 
+ console.log("This is startButton element", startButton);
+ console.log("This is statusSpan element", statusSpan);
+ console.log("This is heading element", heading);
+ console.log("This is padContainer element", padContainer);
 /**
  * VARIABLES
  */
@@ -35,9 +39,24 @@ let roundCount = 0; // track the number of rounds that have been played so far
   {
     color: "red",
     selector: document.querySelector(".js-pad-red"),
-    sound: new Audio("../assets/simon-says-sound-1.mp3"),
+    sound: new Audio("assets/simon-says-sound-1.mp3"),
   },
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
+  {
+    color: "green",
+    selector: document.querySelector(".js-pad-green"),
+    sound: new Audio("assets/simon-says-sound-2.mp3"),
+  },
+  {
+    color: "blue",
+    selector: document.querySelector(".js-pad-blue"),
+    sound: new Audio("assets/simon-says-sound-3.mp3"),
+  },
+  {
+    color: "yellow",
+    selector: document.querySelector(".js-pad-yellow"),
+    sound: new Audio("assets/simon-says-sound-4.mp3"),
+  }
 ];
 
 /**
@@ -46,10 +65,9 @@ let roundCount = 0; // track the number of rounds that have been played so far
 
 padContainer.addEventListener("click", padHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
-
-/**
- * EVENT HANDLERS
- */
+startButton.addEventListener("click",startButtonHandler)
+//  * EVENT HANDLERS
+//  */ 
 
 /**
  * Called when the start button is clicked.
@@ -65,9 +83,15 @@ padContainer.addEventListener("click", padHandler);
  * 5. Call `playComputerTurn()` to start the game with the computer going first.
  *
  */
+
+
 function startButtonHandler() {
   // TODO: Write your code here.
-
+  setLevel();
+  roundCount++;
+ startButton.classList.add("hidden");
+ statusSpan.classList.remove("hidden");
+ playComputerTurn();
   return { startButton, statusSpan };
 }
 
@@ -122,7 +146,19 @@ function padHandler(event) {
  *
  */
 function setLevel(level = 1) {
-  // TODO: Write your code here.
+  // TODO: Write your code here. 
+  if (level > 4 || level < 0) {
+    return "Please enter level 1, 2, 3, or 4";
+  } else if (!level || level === 1) {
+    return 8;
+  } else if (level === 2) {
+    return 14;
+  } else if (level === 3) {
+    return 20;
+  } else if (level === 4) {
+    return 31;
+  } 
+  console.log("setLevel function", level);
 }
 
 /**
@@ -192,10 +228,10 @@ function activatePads(sequence) {
 /**
  * Allows the computer to play its turn.
  *
- * 1. Add the `"unclickable"` class to `padContainer` to prevent the user from pressing
+ * 1. (Done) Add the `"unclickable"` class to `padContainer` to prevent the user from pressing
  * any of the pads
  *
- * 2. The status should display a message that says "The computer's turn..."
+ * 2. (Done) The status should display a message that says "The computer's turn..."
  *
  * 3. The heading should display a message that lets the player know how many rounds are left
  * (e.g., "`Round ${roundCount} of ${maxRoundCount}`")
@@ -214,7 +250,8 @@ function activatePads(sequence) {
  */
  function playComputerTurn() {
   // TODO: Write your code here.
-
+  padContainer.classList.add("unclickable");
+  statusSpan.innerText = "The computer's turn";
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 

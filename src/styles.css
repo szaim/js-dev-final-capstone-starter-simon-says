@@ -47,6 +47,12 @@ h1 {
   cursor: pointer;
 }
 
+#center-button {
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
 .start-button:hover {
   color: greenyellow;
   font-size: 18px;
@@ -67,9 +73,11 @@ h1 {
 }
 
 .pad-red {
-  border-top-left-radius: 200px;
   background-color: red;
+  border-top-left-radius: 200px;
 }
+
+
 
 .pad-red:hover,
 .pad-red:focus {
@@ -135,7 +143,7 @@ h1 {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .unclickable {

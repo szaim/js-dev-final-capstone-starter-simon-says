@@ -66,10 +66,10 @@ Good luck - you can do this!
 ## US-01: Basic Game Structure
 
 The game needs to have the basic structure for it to function, including:
-- a name for the game
-- a start button 
+- a name for the game (done)
+- a start button (done)
 - a status message
-- four colored pads
+- four colored pads (done)
 
 The starter code is provided for you; for this user story, you will complete the starter code to implement the rest of the basic game structure.
 
@@ -87,7 +87,7 @@ Besides naming your game, you will also need to assign a `class` attribute to th
 
 #### 2. US-01: Define a `start` button in `index.html`
 
-The game needs a `start` button so that a player can start playing the game. Create a `button` tag and set its class attribute to `"start-button"` and `"js-start-button"` , like this:
+The game needs a `start` button so that a player can start playing the game. Create a `button` tag and set its class attribute to `"start-button"` and `"c"` , like this:
 
 ```html
  <button class="start-button js-start-button">start</button>
@@ -155,11 +155,11 @@ The urls for the other sound files are provided in the JavaScript file.
 
 #### Acceptance criteria
 
-1. The title is surrounded by `<h1>` tags and has `js-heading` set as `class`.
-2. Four pads are declared in the html file as `<div>`s.
-3. A start button is defined in the html file.
-4. The missing query selectors for the status, heading, and pad container elements were added in the `src/index.js` file.
-5. The `pads` array defined in the `src/index.js` file contains four pad objects.
+1. (done) The title is surrounded by `<h1>` tags and has `js-heading` set as `class`.
+2. (done) Four pads are declared in the html file as `<div>`s.
+3. (done) A start button is defined in the html file.
+4. (done) The missing query selectors for the status, heading, and pad container elements were added in the `src/index.js` file.
+5. (done) The `pads` array defined in the `src/index.js` file contains four pad objects.
 
 ## US-02: Initialize game
 
