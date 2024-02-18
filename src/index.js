@@ -20,6 +20,7 @@ let playerSequence = []; // track the player-generated sequence of pad presses
 let maxRoundCount = 0; // the max number of rounds, varies with the chosen level
 let roundCount = 0; // track the number of rounds that have been played so far
 
+
 /**
  *
  * The `pads` array contains an array of pad objects.
@@ -39,25 +40,26 @@ let roundCount = 0; // track the number of rounds that have been played so far
   {
     color: "red",
     selector: document.querySelector(".js-pad-red"),
-    sound: new Audio("assets/simon-says-sound-1.mp3"),
+    sound: new Audio("../assets/simon-says-sound-1.mp3"),
   },
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
   {
     color: "green",
     selector: document.querySelector(".js-pad-green"),
-    sound: new Audio("assets/simon-says-sound-2.mp3"),
+    sound: new Audio("../assets/simon-says-sound-2.mp3"),
   },
   {
     color: "blue",
     selector: document.querySelector(".js-pad-blue"),
-    sound: new Audio("assets/simon-says-sound-3.mp3"),
+    sound: new Audio("../assets/simon-says-sound-3.mp3"),
   },
   {
     color: "yellow",
     selector: document.querySelector(".js-pad-yellow"),
-    sound: new Audio("assets/simon-says-sound-4.mp3"),
+    sound: new Audio("../assets/simon-says-sound-4.mp3"),
   }
 ];
+
 
 /**
  * EVENT LISTENERS
@@ -98,25 +100,33 @@ function startButtonHandler() {
 /**
  * Called when one of the pads is clicked.
  *
- * 1. `const { color } = event.target.dataset;` extracts the value of `data-color`
+ * 1. (Done) `const { color } = event.target.dataset;` extracts the value of `data-color`
  * attribute on the element that was clicked and stores it in the `color` variable
  *
- * 2. `if (!color) return;` exits the function if the `color` variable is falsy
+ * 2. (Done) `if (!color) return;` exits the function if the `color` variable is falsy
  *
- * 3. Use the `.find()` method to retrieve the pad from the `pads` array and store it
+ * 3. (Done) Use the `.find()` method to retrieve the pad from the `pads` array and store it
  * in a variable called `pad`
  *
- * 4. Play the sound for the pad by calling `pad.sound.play()`
+ * 4. (Sound will not play) Play the sound for the pad by calling `pad.sound.play()`
  *
- * 5. Call `checkPress(color)` to verify the player's selection
+ * 5. (Done) Call `checkPress(color)` to verify the player's selection
  *
- * 6. Return the `color` variable as the output
+ * 6. (Done) Return the `color` variable as the output
  */
-function padHandler(event) {
-  const { color } = event.target.dataset;
-  if (!color) return;
 
+// Why does the function below yield the following error: "DOMException: The element has no supported sources." ?
+
+function padHandler(event) {
+  
+  const { color } = event.target.dataset;
+  console.log("padHandler(event)",{color}.color);
+  if (!color) return;
   // TODO: Write your code here.
+  let pad = pads.find(pad => pad.color === color);
+  console.log("pad: ",pad);
+  pad.sound.play();
+  checkPress(color);
   return color;
 }
 
@@ -181,9 +191,10 @@ function setLevel(level = 1) {
  * getRandomItem([1, 2, 3, 4]) //> returns 1
  */
 function getRandomItem(collection) {
-  // if (collection.length === 0) return null;
-  // const randomIndex = Math.floor(Math.random() * collection.length);
-  // return collection[randomIndex];
+  if (collection.length === 0) return null;
+  const randomIndex = Math.floor(Math.random() * collection.length);
+  return collection[randomIndex];
+
 }
 
 /**
@@ -191,42 +202,60 @@ function getRandomItem(collection) {
  */
 function setText(element, text) {
   // TODO: Write your code here.
+  document.querySelector(element).innerText = text;
   return element;
 }
 
 /**
  * Activates a pad of a given color by playing its sound and light
  *
- * 1. Use the `.find()` method to retrieve the pad from the `pads` array and store it in
+ * 1. (Did not use `.find() method`) Use the `.find()` method to retrieve the pad from the `pads` array and store it in
  * a variable called `pad`
  *
- * 2. Add the `"activated"` class to the selected pad
+ * 2. (Done) Add the `"activated"` class to the selected pad
  *
- * 3. Play the sound associated with the pad
+ * 3. (Do not know how to play sound) Play the sound associated with the pad
  *
- * 4. After 500ms, remove the `"activated"` class from the pad
+ * 4. (Done) After 500ms, remove the `"activated"` class from the pad
  */
 
 function activatePad(color) {
   // TODO: Write your code here.
+  console.log("pads[color]",pads[color])
+  let pad = pads[color];
+  let padClass = document.querySelector(`.pad-${pad.color}`)
+  console.log("padClass: ",padClass);
+  padClass.classList.add("activated"); 
+  pad.sound.play();
+  setTimeout(() => {
+    padClass.classList.remove("activated");
+  }, 500);
 }
+
 
 /**
  * Activates a sequence of colors passed as an array to the function
  *
- * 1. Iterate over the `sequence` array using `.forEach()`
+ * 1. (Done) Iterate over the `sequence` array using `.forEach()`
  *
- * 2. For each element in `sequence`, use `setTimeout()` to call `activatePad()`, adding
+ * 2. (Done) For each element in `sequence`, use `setTimeout()` to call `activatePad()`, adding
  * a delay (in milliseconds) between each pad press. Without it, the pads in the sequence
  * will be activated all at once
  *
- * 3. The delay between each pad press, passed as a second argument to `setTimeout()`, needs
+ * 3. (Done) The delay between each pad press, passed as a second argument to `setTimeout()`, needs
  * to change on each iteration. The first button in the sequence is activated after 600ms,
  * the next one after 1200ms (600ms after the first), the third one after 1800ms, and so on.
  */
 
 function activatePads(sequence) {
   // TODO: Write your code here.
+  console.log(`activePads(${sequence})`);
+  let delay = 600;
+  sequence.forEach((color) => {
+    console.log("Message is delayed by: ",delay);
+    setTimeout(activatePad(color), delay);
+    delay = delay + 600;
+  })
 }
 
 /**
@@ -242,10 +271,10 @@ function activatePads(sequence) {
  *
  * 4. (Done) Push a randomly selected color into the `computerSequence` array
  *
- * 5. Call `activatePads(computerSequence)` to light up each pad according to order defined in
+ * 5. (Done) Call `activatePads(computerSequence)` to light up each pad according to order defined in
  * `computerSequence`
  *
- * 6. The playHumanTurn() function needs to be called after the computer’s turn is over, so
+ * 6. (Done) The playHumanTurn() function needs to be called after the computer’s turn is over, so
  * we need to add a delay and calculate when the computer will be done with the sequence of
  * pad presses. The `setTimeout()` function executes `playHumanTurn(roundCount)` one second
  * after the last pad in the sequence is activated. The total duration of the sequence corresponds
@@ -258,21 +287,36 @@ function activatePads(sequence) {
   statusSpan.innerText = "The computer's turn...";
   heading.innerText = `Round ${roundCount} of ${maxRoundCount}`
   const totalColors = Object.keys(pads).length;
-  let randomColor = pads[Math.floor((Math.random())*totalColors)].color;
-  computerSequence.push(randomColor);
+  console.log("getRandomItem(pads)",getRandomItem(pads));
+  let randomColor = Math.floor((Math.random())*totalColors);
+  for (let i = 0; i < roundCount; i++ ) {
+    computerSequence.push(randomColor);
+  }
+  
   console.log(computerSequence);
+  activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
 /**
  * Allows the player to play their turn.
  *
- * 1. Remove the "unclickable" class from the pad container so that each pad is clickable again
+ * 1. (Done) Remove the "unclickable" class from the pad container so that each pad is clickable again
  *
- * 2. Display a status message showing the player how many presses are left in the round
+ * 2. (Done) Display a status message showing the player how many presses are left in the round
  */
 function playHumanTurn() {
   // TODO: Write your code here.
+  let clicksLeft = roundCount; // tracks the starting number of clicks allowed in a round
+  let pressGrammar = "Presses";
+    if (clicksLeft === 1) {
+      pressGrammar = "Press"
+    }
+  
+  console.log("It's the human's turn!")
+  padContainer.classList.remove("unclickable");
+  statusSpan.innerText = `Players Turn: ${clicksLeft} ${pressGrammar} Left`;
+  
 }
 
 /**
