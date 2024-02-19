@@ -119,8 +119,11 @@ function padHandler(event) {
   if (!color) return;
   // TODO: Write your code here.
   let pad = pads.find(pad => pad.color === color);
-  pad.sound.play();
-  checkPress(color);
+  if (pad) {
+    pad.sound.play();
+    checkPress(color);
+  }
+  
   return color;
 }
 
@@ -217,7 +220,6 @@ function activatePad(color) {
   // TODO: Write your code here.
   console.log("Computer selected color: ",color)
   let pad = pads.find(pad => pad.color === color);
-  console.log("pad: ", pad);
   // let padClass = document.querySelector(`.pad-${pad.color}`);
   pad.selector.classList.add("activated"); 
   // pad.sound.play();
@@ -280,14 +282,14 @@ function activatePads(sequence) {
   padContainer.classList.add("unclickable");
   setText(statusSpan,"The computer's turn...");
   setText(heading, `Round ${roundCount} of ${maxRoundCount}` );
-  const totalColors = Object.keys(pads).length;
-  let randomColor = Math.floor((Math.random())*totalColors);
   
-  for (let i = 0; i < roundCount; i++ ) {
+  
     computerSequence.push(getRandomItem(pads).color);
-  }
+    console.log("roundCount: ",roundCount)
+    console.log("computerSequence", computerSequence)
   
-  console.log("computerSequence: ",computerSequence);
+  
+  
   activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
@@ -313,7 +315,7 @@ function playHumanTurn() {
   let clicksLeft = roundCount; // tracks the starting number of clicks allowed in a round
   padContainer.classList.remove("unclickable");
   setText(statusSpan, `Players Turn: ${clicksLeft} ${pressGrammar(clicksLeft)} Left`);
-  
+  clicksLeft = clicksLeft - 1;
 }
 
 /**
@@ -343,7 +345,7 @@ function checkPress(color) {
   let index = 0;
   let buttonsPressed = playerSequence.length;
   playerSequence.push(color);
-  (statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
+  setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
   console.log("playerSequence: ", playerSequence);
   console.log("playerIndex: ", index);
   for (let i = 0; i < pads.length; i++) {
