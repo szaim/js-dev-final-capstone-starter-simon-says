@@ -115,12 +115,11 @@ playComputerTurn();
 function padHandler(event) {
  
  const { color } = event.target.dataset;
- console.log("human selected color: ",{color}.color);
  if (!color) return;
  // TODO: Write your code here.
  let pad = pads.find(pad => pad.color === color);
  if (pad) {
-   pad.sound.play();
+  //  pad.sound.play();
    checkPress(color);
  }
  
@@ -218,7 +217,6 @@ function setText(element, text) {
 
 function activatePad(color) {
  // TODO: Write your code here.
- console.log("Computer selected color: ",color)
  let pad = pads.find(pad => pad.color === color);
  // let padClass = document.querySelector(`.pad-${pad.color}`);
  pad.selector.classList.add("activated"); 
@@ -242,6 +240,7 @@ function activatePad(color) {
 * to change on each iteration. The first button in the sequence is activated after 600ms,
 * the next one after 1200ms (600ms after the first), the third one after 1800ms, and so on.
 */
+
 
 function activatePads(sequence) {
  // TODO: Write your code here.
@@ -285,12 +284,11 @@ function playComputerTurn() {
  
  
    computerSequence.push(getRandomItem(pads).color);
-   console.log("roundCount: ",roundCount)
-   console.log("computerSequence", computerSequence)
  
  
  
  activatePads(computerSequence);
+ console.log("computerSequence: ",computerSequence);
  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
@@ -316,8 +314,6 @@ function playHumanTurn() {
  padContainer.classList.remove("unclickable");
  setText(statusSpan, `Players Turn: ${clicksLeft} ${pressGrammar(clicksLeft)} Left`);
  clicksLeft = clicksLeft - 1;
-
- console.log("clicks left: ", clicksLeft);
 }
 
 /**
@@ -340,18 +336,12 @@ function playHumanTurn() {
 *
 * 6. If there are no presses left (i.e., `remainingPresses === 0`), it means the round
 * is over, so call `checkRound()` instead to check the results of the round
-*
-*/
+**/
 function checkPress(color) {
  // TODO: Write your code here.
  let index = 0;
  let buttonsPressed = playerSequence.length;
  playerSequence.push(color);
- console.log("remainingPresses: ", remainingPresses);
- console.log("computerSequenceLength: ", computerSequence.length);
- console.log("playSequenceLength: ", playerSequence.length);
- console.log("playerSequence: ", playerSequence);
- console.log("playerIndex: ", index);
  for (let i = 0; i < pads.length; i++) {
    if (color === pads[i].color) {
      index = i;
@@ -359,8 +349,8 @@ function checkPress(color) {
  }
 
  for (let i = 0; i < buttonsPressed; i++) {
-   console.log("computerSequence[i]: ",computerSequence[i]);
-   console.log("playerSequence[i]: ", playerSequence);
+   
+   console.log("playerSequence: ", playerSequence);
    if (computerSequence[i] != playerSequence[i]) {
      resetGame("Wrong!!!");
    } 
@@ -369,8 +359,7 @@ function checkPress(color) {
  let remainingPresses = computerSequence.length - playerSequence.length;
  setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
  if (remainingPresses === 0) {
-   checkRound();
-   console.log("No more guesses!");
+   checkRound()
  }
 }
 
