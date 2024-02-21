@@ -84,6 +84,8 @@ startButton.addEventListener("click",startButtonHandler)
 
 function startButtonHandler() {
  // TODO: Write your code here.
+ gameOver = false;
+ console.log("gameOver (startButton): ", gameOver);
  setLevel();
  roundCount++;
 startButton.classList.add("hidden");
@@ -355,7 +357,8 @@ function checkPress(color) {
  for (let i = 0; i <= buttonsPressed; i++) {
  
    if (computerSequence[i] != playerSequence[i]) {
-     resetGame("Wrong!!!");
+    console.log("game over.") 
+    resetGame("Wrong!!!");
    } 
  }
 
@@ -384,8 +387,12 @@ function checkPress(color) {
 
 function checkRound() {
  // TODO: Write your code here.
+ console.log("gameOver (checkRound): ", gameOver);
  if (playerSequence.length === maxRoundCount) {
    resetGame("You crushed this game! Congrats!!");
+ } else if (gameOver === true ) {
+  (console.log("checkRound return from gameOver"));
+  return;
  } else {
   console.log("Nice, keep going!");
    (statusSpan, `Nice! Keep going!`);
@@ -415,6 +422,8 @@ function resetGame(text) {
  startButton.classList.remove("hidden");
  statusSpan.classList.add("hidden");
  padContainer.classList.add("unclickable");
+ gameOver = true;
+ console.log("gameOver (resetGame): ", gameOver);
 }
 
 /**
