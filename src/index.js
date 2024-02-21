@@ -121,7 +121,7 @@ function padHandler(event) {
  // TODO: Write your code here.
  let pad = pads.find(pad => pad.color === color);
  if (pad) {
-  //  pad.sound.play();
+   pad.sound.play();
    checkPress(color);
  }
  
@@ -222,7 +222,7 @@ function activatePad(color) {
  let pad = pads.find(pad => pad.color === color);
  // let padClass = document.querySelector(`.pad-${pad.color}`);
  pad.selector.classList.add("activated"); 
- // pad.sound.play();
+ pad.sound.play();
  setTimeout(() => {
    pad.selector.classList.remove("activated");
  }, 500);
