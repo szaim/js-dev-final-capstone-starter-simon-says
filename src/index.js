@@ -276,13 +276,12 @@ function activatePads(sequence) {
 * to the current round (roundCount) multiplied by 600ms which is the duration for each pad in the
 * sequence.
 */
-
-
 function playComputerTurn() {
  // TODO: Write your code here.
  padContainer.classList.add("unclickable");
  setText(statusSpan,"The computer's turn...");
  setText(heading, `Round ${roundCount} of ${maxRoundCount}` );
+ 
  
    computerSequence.push(getRandomItem(pads).color);
  
@@ -349,9 +348,10 @@ function checkPress(color) {
    }
  }
 
- for (let i = 0; i < buttonsPressed; i++) {
+
+ for (let i = 0; i <= buttonsPressed; i++) {
    
-   console.log("playerSequence: ", playerSequence);
+ 
    if (computerSequence[i] != playerSequence[i]) {
      resetGame("Wrong!!!");
    } 
@@ -360,7 +360,6 @@ function checkPress(color) {
  let remainingPresses = computerSequence.length - playerSequence.length;
  setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
  if (remainingPresses === 0) {
-  console.log("Checking to see if you're done with round...");
    checkRound()
  }
 }
@@ -388,7 +387,7 @@ function checkRound() {
    (statusSpan, `Nice! Keep going!`);
    roundCount ++;
    playerSequence = [];
-   setTimeout(() => {playComputerTurn(), console.log("Playing again!")}, 1000);
+   setTimeout(() => {playComputerTurn()}, 1000);
  }
 }
 
