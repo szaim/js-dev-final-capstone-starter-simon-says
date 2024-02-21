@@ -339,26 +339,29 @@ function playHumanTurn() {
 **/
 function checkPress(color) {
  // TODO: Write your code here.
+
  let index = 0;
  let buttonsPressed = playerSequence.length;
  playerSequence.push(color);
+ let remainingPresses = computerSequence.length - playerSequence.length;
+ setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
+
  for (let i = 0; i < pads.length; i++) {
    if (color === pads[i].color) {
      index = i;
    }
  }
 
-
  for (let i = 0; i <= buttonsPressed; i++) {
-   
  
    if (computerSequence[i] != playerSequence[i]) {
      resetGame("Wrong!!!");
    } 
  }
 
- let remainingPresses = computerSequence.length - playerSequence.length;
- setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
+ 
+
+
  if (remainingPresses === 0) {
    checkRound()
  }
@@ -384,6 +387,7 @@ function checkRound() {
  if (playerSequence.length === maxRoundCount) {
    resetGame("You crushed this game! Congrats!!");
  } else {
+  console.log("Nice, keep going!");
    (statusSpan, `Nice! Keep going!`);
    roundCount ++;
    playerSequence = [];
