@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  color: yellow;
+  color: black;
   font-family: 'Rubik Microbe', sans-serif;
   display: flex;
   justify-content: center;
@@ -20,7 +20,7 @@ body {
 }
 
 main {
-  background-color: #000;
+  background-color: #FDFFFC;
   padding: 40px;
 }
 
@@ -38,13 +38,15 @@ h1 {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: yellow;
+  background-color: #235789 !important;
+  color: #FDFFFC;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   background-color: transparent;
-  border: 1px solid yellow;
+  border: 1px solid #235789;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -67,87 +69,112 @@ h1 {
 
 .pad-container {
   display: grid;
-  grid-template-rows: 200px 200px;
-  grid-template-columns: 200px 200px;
-  grid-gap: 5px;
+  grid-template-rows: 200px 200px 200px;
+  grid-template-columns: 200px 200px 200px;
+  grid-gap: 10px;
   margin: 20px;
 }
 
 .pad {
-  color: black;
+  color: white;
   font-size: 22px;
-  justify-content: center;
-  align-items: center;
   display: flex;
+
 }
 
 .pad-red {
-  background-color: red;
-  border-top-left-radius: 200px;
+  background-color: #235789;
+  clip-path: polygon(
+    50% 50%,
+    100% 100%,
+    0% 100%
+  );
+  align-items: flex-end;
+  justify-content: center;
 }
 
 
 
 .pad-red:hover,
 .pad-red:focus {
-  background-color: #ff451a;
+  background-color: #9EC3E6;
   transform: rotate(-5deg);
 }
 
 .pad-red:active,
 .pad-red.activated {
-  background-color: #ff5c36;
+  background-color: #7DAFDE;
   transform: translateY(10px);
 }
 
 .pad-green {
-  border-top-right-radius: 200px;
-  background-color: green;
+  background-color: #C1292E;
+  clip-path: polygon(
+    50% 50%,
+    100% 0%,
+    0% 0%
+  );
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .pad-green:hover,
 .pad-green:focus {
-  background-color: #8cc218;
+  background-color: #EA9A9D;
   transform: rotate(5deg);
 }
 
 .pad-green:active,
 .pad-green.activated {
-  background-color: #a0ea00;
+  background-color: #E7888C;
   transform: translateY(10px);
 }
 
 .pad-yellow {
-  border-bottom-right-radius: 200px;
-  background-color: yellow;
+  background-color: #09814A;
+  clip-path: polygon(
+    50% 50%,
+    100% 0%,
+    100% 100%
+  );
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 16%;
 }
 
 .pad-yellow:hover,
 .pad-yellow:focus {
-  background-color: #ffb900;
+  background-color: #66F4B4;
   transform: rotate(5deg);
 }
 
 .pad-yellow:active,
 .pad-yellow.activated {
-  background-color: #ffca3d;
+  background-color: #0C9759;
   transform: translateY(10px);
 }
 
 .pad-blue {
-  border-bottom-left-radius: 200px;
-  background-color: blue;
+  background-color: #A01A7D;
+  clip-path: polygon(
+    0% 100%,
+    0% 0%,
+    50% 50%
+  );
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 16%;
 }
 
 .pad-blue:hover,
 .pad-blue:focus {
-  background-color: #139ddd;
+  background-color: #EB84D0;
   transform: rotate(5deg);
 }
 
 .pad-blue:active,
 .pad-blue.activated {
-  background-color: #2bbcff;
+  background-color: #E561C2;
   transform: translateY(10px);
 }
 

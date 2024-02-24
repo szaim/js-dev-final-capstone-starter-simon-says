@@ -105,6 +105,8 @@ padContainer.classList.remove("unclickable");
  return { startButton, statusSpan };
 }
 
+// Called when a pad is clicked. Sets the level chosen by the human after start.
+
 function levelHandler(event) {
   console.log("humanPlaying (levelHandler): ", playing === "human");
   if (playing === "human") {
@@ -346,7 +348,7 @@ function playComputerTurn() {
 
  playing = "human";
 }
-
+// Displays the correct version of press or presses within the statusSpan based on how many clicks are left
 function pressGrammar(pressesLeft) {
  let pressGrammar = "Presses";
  if (pressesLeft === 1) {
