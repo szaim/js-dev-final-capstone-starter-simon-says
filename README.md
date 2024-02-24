@@ -1,5 +1,7 @@
 Live site: https://caitlinecataldo.github.io/js-dev-final-capstone-starter-simon-says/
 
+
+
 # Foundations for Web Development - Final Capstone (Simon Says)
 
 You've been hired as an intern at *Thinkful Game Studio*, which has decided to create a game, *Simon Says*. You will be applying all the HTML, CSS, and JavaScript skills you've learned in this course to help them build this game.

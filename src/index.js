@@ -16,7 +16,9 @@ let playerSequence = []; // track the player-generated sequence of pad presses
 let maxRoundCount = 0; // the max number of rounds, varies with the chosen level
 let roundCount = 0; // track the number of rounds that have been played so far
 let level = 0; //  this is the level set by the human player
-let playing = "" // tracks if the human or computer played last
+let playing = ""; // tracks if the human or computer played last
+let successMusic = new Audio(".../assets/cartoon_success_fanfair.mp3"); // sound played when all rounds are successfully completed (Sound from Zapsplat.com)
+let failureMusic = new Audio(".../assets/multimedia_game_sound_synth_tone_bold_fail_52993.mp3"); // sound played when the game is lost (Sound from Zapsplat.com)
 
 
 /**
@@ -407,7 +409,8 @@ function checkPress(color) {
  for (let i = 0; i <= buttonsPressed; i++) {
  
    if (computerSequence[i] != playerSequence[i]) {
-    console.log("game over.") 
+    failureMusic.play();
+    console.log("game over."); 
     resetGame("Wrong!!!");
    } 
  }
@@ -440,6 +443,7 @@ function checkRound() {
  console.log("level (checkRound()): ", level);
  console.log("gameOver (checkRound): ", gameOver);
  if (playerSequence.length === maxRoundCount) {
+  successMusic.play();
    resetGame("You crushed this game! Congrats!!");
  } else if (gameOver === true ) {
   (console.log("checkRound return from gameOver"));
