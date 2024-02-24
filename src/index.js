@@ -64,7 +64,7 @@ const pads = [
 
 
 /**
-* EVENT LISTENERS
+* EVENT LISTENERSs
 */
 
 padContainer.addEventListener("click", padHandler);
@@ -72,6 +72,11 @@ padContainer.addEventListener("click", padHandler);
 startButton.addEventListener("click",startButtonHandler);
 
 padContainer.addEventListener("click", levelHandler);
+
+
+
+
+
 //  * EVENT HANDLERS
 //  */ 
 
