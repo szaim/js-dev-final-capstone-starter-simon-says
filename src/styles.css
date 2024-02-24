@@ -29,6 +29,7 @@ h1 {
   font-size: 40px;
 }
 
+
 .game-controls {
   text-align: center;
 }
@@ -60,7 +61,7 @@ h1 {
   transform: rotate(5deg);
 }
 
-.status {
+.status, .level-selector {
   font-size: 22px;
 }
 
@@ -70,6 +71,14 @@ h1 {
   grid-template-columns: 200px 200px;
   grid-gap: 5px;
   margin: 20px;
+}
+
+.pad {
+  color: black;
+  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .pad-red {

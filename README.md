@@ -70,7 +70,7 @@ Good luck - you can do this!
 The game needs to have the basic structure for it to function, including:
 - a name for the game (done)
 - a start button (done)
-- a status message
+- a status message (done)
 - four colored pads (done)
 
 The starter code is provided for you; for this user story, you will complete the starter code to implement the rest of the basic game structure.

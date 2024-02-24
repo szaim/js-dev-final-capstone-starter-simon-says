@@ -7,6 +7,7 @@ const startButton = document.querySelector(".js-start-button");
 const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
 const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
 const padContainer = document.querySelector(".js-pad-container"); // Use querySelector() to get the heading element
+const levelSelector = document.querySelectorAll(".level");
 /**
 * VARIABLES
 */
@@ -14,6 +15,8 @@ let computerSequence = []; // track the computer-generated sequence of pad press
 let playerSequence = []; // track the player-generated sequence of pad presses
 let maxRoundCount = 0; // the max number of rounds, varies with the chosen level
 let roundCount = 0; // track the number of rounds that have been played so far
+let level = 0; //  this is the level set by the human player
+let playing = "" // tracks if the human or computer played last
 
 
 /**
@@ -30,6 +33,8 @@ let roundCount = 0; // track the number of rounds that have been played so far
 * Audio file for the yellow pad: "../assets/simon-says-sound-4.mp3"
 *
 */
+
+console.log("level (beginning of code): ", level);
 
 const pads = [
  {
@@ -62,7 +67,9 @@ const pads = [
 
 padContainer.addEventListener("click", padHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
-startButton.addEventListener("click",startButtonHandler)
+startButton.addEventListener("click",startButtonHandler);
+
+padContainer.addEventListener("click", levelHandler);
 //  * EVENT HANDLERS
 //  */ 
 
@@ -84,14 +91,36 @@ startButton.addEventListener("click",startButtonHandler)
 
 function startButtonHandler() {
  // TODO: Write your code here.
+ playing = "human";
  gameOver = false;
- console.log("gameOver (startButton): ", gameOver);
- setLevel();
- roundCount++;
+ levelSelector.forEach((level) => {
+  level.classList.remove("hidden");
+ });
 startButton.classList.add("hidden");
-statusSpan.classList.remove("hidden");
-playComputerTurn();
+padContainer.classList.remove("unclickable");
+
  return { startButton, statusSpan };
+}
+
+function levelHandler(event) {
+  console.log("humanPlaying (levelHandler): ", playing === "human");
+  if (playing === "human") {
+    console.log("levelHandler event : ",event.target.innerText);
+    if (level === 0) {
+      level = parseFloat(event.target.innerText);
+    console.log("level (levelHandler event): ", level);
+  setLevel(level);
+  console.log("level set");
+  levelSelector.forEach((selector) => {
+    selector.classList.add("hidden");
+  })
+  console.log("levelSelector removed");
+  roundCount++;
+  statusSpan.classList.remove("hidden");
+  playComputerTurn();
+  playing = "computer";
+    }
+  }
 }
 
 /**
@@ -115,17 +144,28 @@ playComputerTurn();
 // Why does the function below yield the following error: "DOMException: The element has no supported sources." ?
 
 function padHandler(event) {
- 
- const { color } = event.target.dataset;
- if (!color) return;
- // TODO: Write your code here.
- let pad = pads.find(pad => pad.color === color);
- if (pad) {
-   pad.sound.play();
-   checkPress(color);
- }
- 
- return color;
+let selectedLevel = parseFloat(event.target.innerText);
+console.log("handling the pad");
+console.log("selectedLevel: ", selectedLevel);
+console.log("selectedLevel > 0: ", selectedLevel > 0);
+console.log("level: ", level);
+if (level === 0) { 
+  setLevel(selectedLevel);
+  levelHandler; } 
+
+  console.log("level: ", level);
+  
+if (level > 0) {
+    const { color } = event.target.dataset;
+  if (!color) return;
+  // TODO: Write your code here.
+  let pad = pads.find(pad => pad.color === color);
+  if (pad) {
+    pad.sound.play();
+    checkPress(color);
+  }
+  return color;
+  }
 }
 
 /**
@@ -153,8 +193,9 @@ function padHandler(event) {
 * setLevel(8) //> returns "Please enter level 1, 2, 3, or 4";
 *
 */
-function setLevel(level = 1) {
+function setLevel(level) {
  // TODO: Write your code here. 
+ console.log("setLevel: ", level);
  if (level > 4 || level < 0) {
    return "Please enter level 1, 2, 3, or 4";
  } else if (!level || level === 1) {
@@ -280,18 +321,25 @@ function activatePads(sequence) {
 */
 function playComputerTurn() {
  // TODO: Write your code here.
- padContainer.classList.add("unclickable");
- setText(statusSpan,"The computer's turn...");
- setText(heading, `Round ${roundCount} of ${maxRoundCount}` );
- 
- 
-   computerSequence.push(getRandomItem(pads).color);
- 
- 
- 
- activatePads(computerSequence);
- console.log("computerSequence: ",computerSequence);
- setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+
+ console.log("playing: ", playing);
+ console.log("Computer is taking turn. Level set at: ", level);
+ if (level > 0) {
+  padContainer.classList.add("unclickable");
+  setText(statusSpan,"The computer's turn...");
+  setText(heading, `Round ${roundCount} of ${maxRoundCount}` );
+  
+  
+    computerSequence.push(getRandomItem(pads).color);
+  
+  
+  
+  activatePads(computerSequence);
+  console.log("computerSequence: ",computerSequence);
+  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+ }
+
+ playing = "human";
 }
 
 function pressGrammar(pressesLeft) {
@@ -312,10 +360,12 @@ function pressGrammar(pressesLeft) {
 */
 function playHumanTurn() {
  // TODO: Write your code here.
+ console.log("The human is playing!");
  let clicksLeft = roundCount; // tracks the starting number of clicks allowed in a round
  padContainer.classList.remove("unclickable");
  setText(statusSpan, `Players Turn: ${clicksLeft} ${pressGrammar(clicksLeft)} Left`);
  clicksLeft = clicksLeft - 1;
+ playing = "computer"; 
 }
 
 /**
@@ -387,12 +437,14 @@ function checkPress(color) {
 
 function checkRound() {
  // TODO: Write your code here.
+ console.log("level (checkRound()): ", level);
  console.log("gameOver (checkRound): ", gameOver);
  if (playerSequence.length === maxRoundCount) {
    resetGame("You crushed this game! Congrats!!");
  } else if (gameOver === true ) {
   (console.log("checkRound return from gameOver"));
-  return;
+  return
+  console.log("level (after return within checkRound()): ", level);
  } else {
   console.log("Nice, keep going!");
    (statusSpan, `Nice! Keep going!`);
@@ -416,12 +468,14 @@ function resetGame(text) {
  computerSequence = [];
  playerSequence = [];
  roundCount = [];
+ level = 0;
+ console.log("resetting game. Level at: ", level);
  // Uncomment the code below:
  alert(text);
  setText(heading, "Simon Says");
- startButton.classList.remove("hidden");
- statusSpan.classList.add("hidden");
  padContainer.classList.add("unclickable");
+ statusSpan.classList.add("hidden");
+ startButton.classList.remove("hidden");
  gameOver = true;
  console.log("gameOver (resetGame): ", gameOver);
 }
