@@ -73,7 +73,7 @@ h1 {
 
 .pad-container {
   display: grid;
-  grid-template-rows: 200px 200px 200px;
+  grid-template-rows: 100px 200px 100px;
   grid-template-columns: 200px 200px 200px;
   grid-gap: 10px;
   margin: 20px;
@@ -89,7 +89,7 @@ h1 {
 .pad-red {
   background-color: #235789;
   clip-path: polygon(
-    50% 50%,
+    50% 0%,
     100% 100%,
     0% 100%
   );
@@ -114,7 +114,7 @@ h1 {
 .pad-green {
   background-color: #C1292E;
   clip-path: polygon(
-    50% 50%,
+    50% 100%,
     100% 0%,
     0% 0%
   );
