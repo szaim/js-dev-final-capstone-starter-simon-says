@@ -101,12 +101,15 @@ function startButtonHandler() {
 startButton.classList.add("hidden");
 padContainer.classList.remove("unclickable");
 
+
  return { startButton, statusSpan };
 }
 
 function levelHandler(event) {
   console.log("humanPlaying (levelHandler): ", playing === "human");
   if (playing === "human") {
+    statusSpan.classList.remove("hidden");
+console.log("statusSpan displayed");
     console.log("levelHandler event : ",event.target.innerText);
     if (level === 0) {
       level = parseFloat(event.target.innerText);
@@ -114,11 +117,11 @@ function levelHandler(event) {
   setLevel(level);
   console.log("level set");
   levelSelector.forEach((selector) => {
+    console.log("hiding ", selector);
     selector.classList.add("hidden");
   })
   console.log("levelSelector removed");
   roundCount++;
-  statusSpan.classList.remove("hidden");
   playComputerTurn();
   playing = "computer";
     }
@@ -509,3 +512,5 @@ window.playHumanTurn = playHumanTurn;
 window.checkPress = checkPress;
 window.checkRound = checkRound;
 window.resetGame = resetGame;
+window.successMusic = successMusic;
+window.failureMusic = failureMusic;
