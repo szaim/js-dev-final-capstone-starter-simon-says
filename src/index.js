@@ -20,7 +20,6 @@ let playing = ""; // tracks if the human or computer played last
 let successMusic = new Audio(".../assets/cartoon_success_fanfair.mp3"); // sound played when all rounds are successfully completed (Sound from Zapsplat.com)
 let failureMusic = new Audio(".../assets/multimedia_game_sound_synth_tone_bold_fail_52993.mp3"); // sound played when the game is lost (Sound from Zapsplat.com)
 let arrowIcons = document.querySelectorAll(".arrowIcon");
-console.log(arrowIcons);
 
 
 /**
@@ -69,19 +68,31 @@ let arrows = [
   {
     direction: "left",
     keyCode: 37,
-    button: document.querySelector(".js-pad-yellow")}, 
+    button: document.querySelector(".js-pad-yellow"),
+    color: "#09814A",
+    holdColor: "#0C9759",
+    class: ".js-pad-yellow"}, 
   {
     direction: "top",
     keyCode: 38, 
-    button: document.querySelector(".js-pad-red")},
+    button: document.querySelector(".js-pad-red"),
+    color: "#235789",
+    holdColor: "#7DAFDE",
+    class: ".js-pad-red"},
   {
     direction: "right",
     keyCode: 39,
-    button: document.querySelector(".js-pad-blue")}, 
+    button: document.querySelector(".js-pad-blue"),
+    color: "#A01A7D",
+    holdColor: "#E561C2",
+    class: ".js-pad-blue"}, 
   {
     direction: "down",
     keyCode: 40,
-    button: document.querySelector(".js-pad-green")}];
+    button: document.querySelector(".js-pad-green"),
+    color: "#C1292E",
+    holdColor: "#E7888C",
+    class: ".js-pad-green"}];
 
 
 /**
@@ -94,7 +105,8 @@ startButton.addEventListener("click",startButtonHandler);
 
 padContainer.addEventListener("click", levelHandler);
 
-document.addEventListener('keydown', keyHandler);
+document.addEventListener('keyup', keyClick);
+document.addEventListener('keydown', holdPad);
 
 
 //  * EVENT HANDLERS
@@ -131,20 +143,26 @@ padContainer.classList.remove("unclickable");
 }
 
 // Allows pads to be selected by key
-function keyHandler(event) {
+function keyClick(event) {
   let key = event.keyCode;
-  let selectedButton = "";
   arrows.forEach((arrow) => {
-  //  return arrow.keyCode === key;
   if(parseFloat(arrow.keyCode) === key) {
+    arrow.button.classList.remove("activated");
     arrow.button.click();
   }
   });
-  // selectedButton.click();
-  
-  console.log("key: ",key);
 }
 
+// This function is called when an arrow is held down. It will change the hover color of the selected pad.
+function holdPad(event) {
+  let key = event.keyCode;
+  arrows.forEach((arrow) => {
+    if (parseFloat(arrow.keyCode) === key) {
+      arrow.button.classList.add("activated");
+      // arrow.button.style.backgroundColor = arrow.holdColor;
+    }
+  });
+};
 
 
 // Called when a pad is clicked. Sets the level chosen by the human after start.
