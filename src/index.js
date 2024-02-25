@@ -63,9 +63,25 @@ const pads = [
  }
 ];
 
-// Object that holds all of the values for arrow keys
+// Holds all of the values for arrow keys and icons
 
-arrowKeys = {left: 37, top: 38, right: 39, down: 40};
+let arrows = [
+  {
+    direction: "left",
+    keyCode: 37,
+    button: document.querySelector(".js-pad-yellow")}, 
+  {
+    direction: "top",
+    keyCode: 38, 
+    button: document.querySelector(".js-pad-red")},
+  {
+    direction: "right",
+    keyCode: 39,
+    button: document.querySelector(".js-pad-blue")}, 
+  {
+    direction: "down",
+    keyCode: 40,
+    button: document.querySelector(".js-pad-green")}];
 
 
 /**
@@ -78,8 +94,7 @@ startButton.addEventListener("click",startButtonHandler);
 
 padContainer.addEventListener("click", levelHandler);
 
-
-document.addEventListener('keydown', "");
+document.addEventListener('keydown', keyHandler);
 
 
 //  * EVENT HANDLERS
@@ -118,11 +133,21 @@ padContainer.classList.remove("unclickable");
 // Allows pads to be selected by key
 function keyHandler(event) {
   let key = event.keyCode;
-  console.log(key);
+  let selectedButton = "";
+  arrows.forEach((arrow) => {
+  //  return arrow.keyCode === key;
+  if(parseFloat(arrow.keyCode) === key) {
+    arrow.button.click();
+  }
+  });
+  // selectedButton.click();
+  
+  console.log("key: ",key);
 }
 
-// Called when a pad is clicked. Sets the level chosen by the human after start.
 
+
+// Called when a pad is clicked. Sets the level chosen by the human after start.
 function levelHandler(event) {
   if (playing === "human") {
     statusSpan.classList.remove("hidden");
@@ -141,6 +166,7 @@ function levelHandler(event) {
     }
   }
 }
+
 
 /**
 * Called when one of the pads is clicked.
@@ -183,7 +209,6 @@ if (level > 0) {
 }
 
 // This function shows the arrow icons on the pads
-
 function showArrowIcons() {
   arrowIcons.forEach((arrow) => {
    arrow.classList.remove("hidden");
@@ -495,6 +520,7 @@ function resetGame(text) {
  padContainer.classList.add("unclickable");
  statusSpan.classList.add("hidden");
  startButton.classList.remove("hidden");
+ arrowIcons.forEach((arrow) => {arrow.classList.add("hidden")});
  gameOver = true;
 }
 
