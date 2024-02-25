@@ -1,6 +1,18 @@
 Live site: https://caitlinecataldo.github.io/js-dev-final-capstone-starter-simon-says/
 
+# Success Criteria
 
+Functionality:
+- (done) The game starts when a player clicks the `start` button.
+- (done) The computer selects the pads randomly.
+- (done) The player can select a pad when it's their turn. 
+- (done) The game ends/resets when a player makes a mistake or successfully completes all the rounds of the level.
+- (done) The game is deployed to Github.
+- (done) The game presents some aspects of originality and creativity as specified in US-06.
+
+General Code Organization:
+- (done I think?) Minimal code duplication
+- (done) Comments are used to describe the functions.
 
 # Foundations for Web Development - Final Capstone (Simon Says)
 
