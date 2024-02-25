@@ -24,11 +24,6 @@ body {
   flex-direction: column;
 }
 
-main {
-  background-color: #fdfffceb;
-  padding: 40px;
-}
-
 header {
   display: flex;
 }
@@ -94,6 +89,13 @@ h1 {
 
 /* Mobile design */
 @media (max-width: 767px) {
+  main {
+    background-color: #fdfffceb;
+    padding: 40px;
+    width: 300px;
+    height: 100%;
+  }
+  
   .arrowIcon {
     display: none !important;
   }
@@ -165,6 +167,11 @@ h1 {
 }
 
 @media (min-width: 768px) {
+  main {
+    background-color: #fdfffceb;
+    padding: 40px;
+  }
+  
   .pad-container {
     display: grid;
     grid-template-rows: 100px 200px 100px;
