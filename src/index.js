@@ -19,6 +19,8 @@ let level = 0; //  this is the level set by the human player
 let playing = ""; // tracks if the human or computer played last
 let successMusic = new Audio(".../assets/cartoon_success_fanfair.mp3"); // sound played when all rounds are successfully completed (Sound from Zapsplat.com)
 let failureMusic = new Audio(".../assets/multimedia_game_sound_synth_tone_bold_fail_52993.mp3"); // sound played when the game is lost (Sound from Zapsplat.com)
+let arrowIcons = document.querySelectorAll(".arrowIcon");
+console.log(arrowIcons);
 
 
 /**
@@ -36,7 +38,6 @@ let failureMusic = new Audio(".../assets/multimedia_game_sound_synth_tone_bold_f
 *
 */
 
-console.log("level (beginning of code): ", level);
 
 const pads = [
  {
@@ -62,6 +63,10 @@ const pads = [
  }
 ];
 
+// Object that holds all of the values for arrow keys
+
+arrowKeys = {left: 37, top: 38, right: 39, down: 40};
+
 
 /**
 * EVENT LISTENERSs
@@ -74,7 +79,7 @@ startButton.addEventListener("click",startButtonHandler);
 padContainer.addEventListener("click", levelHandler);
 
 
-
+document.addEventListener('keydown', "");
 
 
 //  * EVENT HANDLERS
@@ -110,25 +115,27 @@ padContainer.classList.remove("unclickable");
  return { startButton, statusSpan };
 }
 
+// Allows pads to be selected by key
+function keyHandler(event) {
+  let key = event.keyCode;
+  console.log(key);
+}
+
 // Called when a pad is clicked. Sets the level chosen by the human after start.
 
 function levelHandler(event) {
-  console.log("humanPlaying (levelHandler): ", playing === "human");
   if (playing === "human") {
     statusSpan.classList.remove("hidden");
-console.log("statusSpan displayed");
-    console.log("levelHandler event : ",event.target.innerText);
+    
     if (level === 0) {
       level = parseFloat(event.target.innerText);
-    console.log("level (levelHandler event): ", level);
   setLevel(level);
-  console.log("level set");
   levelSelector.forEach((selector) => {
-    console.log("hiding ", selector);
     selector.classList.add("hidden");
-  })
-  console.log("levelSelector removed");
+  }
+  );
   roundCount++;
+  showArrowIcons();
   playComputerTurn();
   playing = "computer";
     }
@@ -157,15 +164,10 @@ console.log("statusSpan displayed");
 
 function padHandler(event) {
 let selectedLevel = parseFloat(event.target.innerText);
-console.log("handling the pad");
-console.log("selectedLevel: ", selectedLevel);
-console.log("selectedLevel > 0: ", selectedLevel > 0);
-console.log("level: ", level);
 if (level === 0) { 
   setLevel(selectedLevel);
   levelHandler; } 
 
-  console.log("level: ", level);
   
 if (level > 0) {
     const { color } = event.target.dataset;
@@ -179,6 +181,16 @@ if (level > 0) {
   return color;
   }
 }
+
+// This function shows the arrow icons on the pads
+
+function showArrowIcons() {
+  arrowIcons.forEach((arrow) => {
+   arrow.classList.remove("hidden");
+   console.log(arrow);
+  })
+}
+
 
 /**
 * HELPER FUNCTIONS
@@ -207,7 +219,7 @@ if (level > 0) {
 */
 function setLevel(level) {
  // TODO: Write your code here. 
- console.log("setLevel: ", level);
+
  if (level > 4 || level < 0) {
    return "Please enter level 1, 2, 3, or 4";
  } else if (!level || level === 1) {
@@ -334,8 +346,7 @@ function activatePads(sequence) {
 function playComputerTurn() {
  // TODO: Write your code here.
 
- console.log("playing: ", playing);
- console.log("Computer is taking turn. Level set at: ", level);
+
  if (level > 0) {
   padContainer.classList.add("unclickable");
   setText(statusSpan,"The computer's turn...");
@@ -347,7 +358,7 @@ function playComputerTurn() {
   
   
   activatePads(computerSequence);
-  console.log("computerSequence: ",computerSequence);
+
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
  }
 
@@ -372,7 +383,7 @@ function pressGrammar(pressesLeft) {
 */
 function playHumanTurn() {
  // TODO: Write your code here.
- console.log("The human is playing!");
+
  let clicksLeft = roundCount; // tracks the starting number of clicks allowed in a round
  padContainer.classList.remove("unclickable");
  setText(statusSpan, `Players Turn: ${clicksLeft} ${pressGrammar(clicksLeft)} Left`);
@@ -420,7 +431,6 @@ function checkPress(color) {
  
    if (computerSequence[i] != playerSequence[i]) {
     failureMusic.play();
-    console.log("game over."); 
     resetGame("Wrong!!!");
    } 
  }
@@ -450,17 +460,13 @@ function checkPress(color) {
 
 function checkRound() {
  // TODO: Write your code here.
- console.log("level (checkRound()): ", level);
- console.log("gameOver (checkRound): ", gameOver);
+
  if (playerSequence.length === maxRoundCount) {
   successMusic.play();
    resetGame("You crushed this game! Congrats!!");
  } else if (gameOver === true ) {
-  (console.log("checkRound return from gameOver"));
   return
-  console.log("level (after return within checkRound()): ", level);
  } else {
-  console.log("Nice, keep going!");
    (statusSpan, `Nice! Keep going!`);
    roundCount ++;
    playerSequence = [];
@@ -483,7 +489,6 @@ function resetGame(text) {
  playerSequence = [];
  roundCount = [];
  level = 0;
- console.log("resetting game. Level at: ", level);
  // Uncomment the code below:
  alert(text);
  setText(heading, "Simon Says");
@@ -491,7 +496,6 @@ function resetGame(text) {
  statusSpan.classList.add("hidden");
  startButton.classList.remove("hidden");
  gameOver = true;
- console.log("gameOver (resetGame): ", gameOver);
 }
 
 /**

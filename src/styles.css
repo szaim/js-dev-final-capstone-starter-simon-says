@@ -54,6 +54,7 @@ h1 {
   cursor: pointer;
 }
 
+
 #center-button {
   display: flex;
   margin: auto;
@@ -91,7 +92,7 @@ h1 {
     100% 100%,
     0% 100%
   );
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
 }
 
@@ -117,7 +118,7 @@ h1 {
     0% 0%
   );
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .pad-green:hover,
