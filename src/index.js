@@ -20,6 +20,8 @@ let playing = ""; // tracks if the human or computer played last
 let successMusic = new Audio(".../assets/cartoon_success_fanfair.mp3"); // sound played when all rounds are successfully completed (Sound from Zapsplat.com)
 let failureMusic = new Audio(".../assets/multimedia_game_sound_synth_tone_bold_fail_52993.mp3"); // sound played when the game is lost (Sound from Zapsplat.com)
 let arrowIcons = document.querySelectorAll(".arrowIcon");
+let totalPoints = 0; // tracks the total number of points (correct clicks)
+let scoreSelector = document.querySelector(".score");
 
 
 /**
@@ -179,6 +181,7 @@ function levelHandler(event) {
   );
   roundCount++;
   showArrowIcons();
+  scoreSelector.classList.remove("hidden");
   playComputerTurn();
   playing = "computer";
     }
@@ -426,7 +429,6 @@ function pressGrammar(pressesLeft) {
 */
 function playHumanTurn() {
  // TODO: Write your code here.
-
  let clicksLeft = roundCount; // tracks the starting number of clicks allowed in a round
  padContainer.classList.remove("unclickable");
  setText(statusSpan, `Players Turn: ${clicksLeft} ${pressGrammar(clicksLeft)} Left`);
@@ -461,6 +463,7 @@ function checkPress(color) {
  let index = 0;
  let buttonsPressed = playerSequence.length;
  playerSequence.push(color);
+
  let remainingPresses = computerSequence.length - playerSequence.length;
  setText(statusSpan,  `Players Turn: ${remainingPresses} ${pressGrammar(remainingPresses)} Left`);
 
@@ -474,9 +477,13 @@ function checkPress(color) {
  
    if (computerSequence[i] != playerSequence[i]) {
     failureMusic.play();
+    
     resetGame("Wrong!!!");
    } 
  }
+ totalPoints = totalPoints + 1;
+ scoreSelector.innerText = `Total Points: ${totalPoints}`;
+ console.log(totalPoints);
 
  
 
@@ -532,6 +539,8 @@ function resetGame(text) {
  playerSequence = [];
  roundCount = [];
  level = 0;
+ totalPoints = 0;
+//  totalPoints = 0;
  // Uncomment the code below:
  alert(text);
  setText(heading, "Simon Says");
@@ -539,6 +548,7 @@ function resetGame(text) {
  statusSpan.classList.add("hidden");
  startButton.classList.remove("hidden");
  arrowIcons.forEach((arrow) => {arrow.classList.add("hidden")});
+ scoreSelector.classList.add("hidden");
  gameOver = true;
 }
 

@@ -85,6 +85,14 @@ h1 {
   font-size: 22px;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+
 .pad-container {
   display: grid;
   grid-template-rows: 100px 200px 100px;
